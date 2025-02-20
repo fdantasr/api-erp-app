@@ -13,6 +13,11 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 from datetime import timedelta
 
+#Carrega o arquivo .env
+from dotenv import load_dotenv
+import os
+load_dotenv()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -21,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-*ke5pbvf3od37m&ts(ote89b=a*a155n9%e9cte++hx$ema+tx'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -87,10 +92,10 @@ CORS_ALLOW_ALL_ORIGINS = True
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-         'NAME': 'database_erp',  # Verifique se o nome é exatamente esse
+         'NAME': os.environ.get('NAME_DATABASE'),  # Verifique se o nome é exatamente esse
         'USER': 'root',
-        'PASSWORD': '123456',
-        'HOST': '172.17.224.99',  # Usando o IP do host Windows
+        'PASSWORD': os.environ.get('PASSWORD'),
+        'HOST': os.environ.get('HOST'),  # Usando o IP do host Windows
         'PORT': '3306',
     }
 }
