@@ -1,8 +1,7 @@
 from rest_framework.exceptions import AuthenticationFailed, APIException
-
 from django.contrib.auth.hashers import check_password, make_password
 from accounts.models import User
-from companies.models import Enterprise
+from companies.models import Enterprise, Employee
 
 class Authentication:
 
@@ -51,7 +50,7 @@ class Authentication:
             )
         #Criando o funcionário
         if type_account == 'employee':
-            Enterprise.objects.create(
+            Employee.objects.create(
                   user_id=created_user.id,
                   enterprise_id=company_id or created_enterprise.id
             )
