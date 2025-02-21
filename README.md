@@ -1,214 +1,196 @@
-# 💻📱 Sistema de Gestão Empresarial (ERP)
+# Enterprise Resource Planning (ERP) System
 
-Esta documentação descreve a implementação de um Sistema de Gestão Empresarial (ERP), desenvolvido com tecnologias modernas, incluindo **ReactJS** para o frontend e **Django Rest Framework** para o backend.
+A comprehensive Enterprise Resource Planning system built with modern technologies, featuring a ReactJS frontend and Django Rest Framework backend.
 
-## ⛏️ Instalação
+## Overview
 
-Para executar o projeto, utilize o seguinte comando:
+This project implements a complete business management solution with features including:
+- User Authentication and Authorization
+- Employee Management
+- Role-based Access Control
+- Task Management
+- Company Administration
+
+## Technology Stack
+
+### Frontend
+- ReactJS
+- TypeScript
+- React Router
+- Redux
+- Material UI
+- Axios
+
+### Backend
+- Django
+- Django Rest Framework
+- Simple JWT
+
+## Getting Started
+
+### Prerequisites
+- Python 3.x
+- Node.js
+- npm or yarn
+
+### Installation
+
+Start the development server:
 
 ```bash
-py manage.py runserver
+python manage.py runserver
 ```
 
-## 💎 Tecnologias Utilizadas
+## API Documentation
 
-**Frontend:** ReactJS, TypeScript, React Router, Redux, Material UI, Axios  
-**Backend:** Django, Django Rest Framework, Simple JWT
+### Authentication
 
----
-
-# 📌 Documentação da API
-
-## 🔐 Autenticação
-
-### Criar uma conta
-
+#### Create Account
 ```http
 POST /api/v1/auth/signup
 ```
 
-#### Parâmetros
+| Parameter  | Type     | Required |
+|-----------|----------|----------|
+| name      | string   | Yes      |
+| email     | string   | Yes      |
+| password  | string   | Yes      |
 
-| Parâmetro  | Tipo     | Descrição       |
-|-------------|----------|----------------|
-| `name`      | `string` | **Obrigatório** |
-| `email`     | `string` | **Obrigatório** |
-| `password`  | `string` | **Obrigatório** |
-
-### Fazer login
-
+#### Login
 ```http
 POST /api/v1/auth/signin
 ```
 
-#### Parâmetros
+| Parameter  | Type     | Required |
+|-----------|----------|----------|
+| email     | string   | Yes      |
+| password  | string   | Yes      |
 
-| Parâmetro  | Tipo     | Descrição       |
-|-------------|----------|----------------|
-| `email`     | `string` | **Obrigatório** |
-| `password`  | `string` | **Obrigatório** |
-
-### Obter informações do usuário autenticado
-
+#### Get User Profile
 ```http
 GET /api/v1/auth/user
 ```
 
-#### Cabeçalho
+*Requires Authentication Token*
 
-| Parâmetro        | Tipo     | Descrição                            |
-|------------------|----------|---------------------------------|
-| `Authorization`  | `string` | **Obrigatório**. Access Token |
+### Employee Management
 
----
-
-## 🏢 Empresas e Funcionários
-
-### Listar funcionários de uma empresa
-
+#### List Company Employees
 ```http
 GET /api/v1/companies/employees
 ```
 
-### Criar um funcionário
+*Requires Authentication*
 
+#### Create Employee
 ```http
 POST /api/v1/companies/employees
 ```
 
-#### Parâmetros
+| Parameter  | Type     | Required |
+|-----------|----------|----------|
+| name      | string   | Yes      |
+| email     | string   | Yes      |
+| password  | string   | Yes      |
 
-| Parâmetro  | Tipo     | Descrição       |
-|-------------|----------|----------------|
-| `name`      | `string` | **Obrigatório** |
-| `email`     | `string` | **Obrigatório** |
-| `password`  | `string` | **Obrigatório** |
-
-### Obter um funcionário
-
+#### Get Employee Details
 ```http
 GET /api/v1/companies/employees/{id}
 ```
 
-#### Parâmetros
-
-| Parâmetro | Tipo     | Descrição                     |
-|------------|----------|--------------------------------|
-| `id`       | `number` | **Obrigatório**. ID do funcionário |
-
-### Atualizar dados de um funcionário
-
+#### Update Employee
 ```http
 PUT /api/v1/companies/employees/{id}
 ```
 
-#### Parâmetros
+| Parameter  | Type     | Required | Description           |
+|-----------|----------|----------|-----------------------|
+| groups    | string   | No       | Array of group IDs    |
+| name      | string   | No       |                       |
+| email     | string   | No       |                       |
 
-| Parâmetro  | Tipo     | Descrição                                        |
-|-------------|----------|-------------------------------------------------|
-| `id`        | `number` | **Obrigatório**. ID do funcionário                |
-| `groups`    | `string` | **Opcional**. Lista de IDs de grupos             |
-| `name`      | `string` | **Opcional**                                     |
-| `email`     | `string` | **Opcional**                                     |
+### Groups and Permissions
 
-### Deletar um funcionário
-
-```http
-DELETE /api/v1/companies/employees/{id}
-```
-
----
-
-## 📊 Tarefas
-
-### Listar tarefas de uma empresa
-
-```http
-GET /api/v1/companies/tasks
-```
-
-### Criar uma tarefa
-
-```http
-POST /api/v1/companies/tasks
-```
-
-#### Parâmetros
-
-| Parâmetro    | Tipo     | Descrição                         |
-|--------------|----------|--------------------------------|
-| `employee_id` | `number` | **Obrigatório**. ID do funcionário  |
-| `status_id`   | `number` | **Obrigatório**. ID do status da tarefa |
-| `title`       | `string` | **Obrigatório**                         |
-| `description` | `string` | **Opcional**                          |
-| `due_date`    | `date`   | **Opcional**. Formato: d/m/Y H:M     |
-
-### Obter uma tarefa
-
-```http
-GET /api/v1/companies/tasks/{id}
-```
-
-### Atualizar uma tarefa
-
-```http
-PUT /api/v1/companies/tasks/{id}
-```
-
-### Deletar uma tarefa
-
-```http
-DELETE /api/v1/companies/tasks/{id}
-```
-
----
-
-## 🔑 Permissões e Grupos
-
-### Listar grupos de uma empresa
-
+#### List Groups
 ```http
 GET /api/v1/companies/groups
 ```
 
-### Criar um grupo
-
+#### Create Group
 ```http
 POST /api/v1/companies/groups
 ```
 
-#### Parâmetros
+| Parameter    | Type     | Required | Description              |
+|-------------|----------|----------|--------------------------|
+| name        | string   | Yes      |                          |
+| permissions | string   | Yes      | Array of permission IDs  |
 
-| Parâmetro    | Tipo     | Descrição                                 |
-|--------------|----------|--------------------------------|
-| `name`       | `string` | **Obrigatório**                         |
-| `permissions`| `string` | **Obrigatório**. Lista de IDs de permissões |
-
-### Obter um grupo
-
+#### Get Group Details
 ```http
 GET /api/v1/companies/groups/{id}
 ```
 
-### Atualizar um grupo
-
-```http
-PUT /api/v1/companies/groups/{id}
-```
-
-### Deletar um grupo
-
-```http
-DELETE /api/v1/companies/groups/{id}
-```
-
-### Listar permissões disponíveis
-
+#### List Available Permissions
 ```http
 GET /api/v1/companies/permissions
 ```
 
----
+### Task Management
 
-Esta documentação fornece informações detalhadas sobre os endpoints da API, garantindo uma integração eficiente e segura ao sistema de gestão empresarial.
+#### List Tasks
+```http
+GET /api/v1/companies/tasks
+```
 
+#### Create Task
+```http
+POST /api/v1/companies/tasks
+```
+
+| Parameter    | Type     | Required | Description              |
+|-------------|----------|----------|--------------------------|
+| employee_id | number   | Yes      |                          |
+| status_id   | number   | Yes      |                          |
+| title       | string   | Yes      |                          |
+| description | string   | No       |                          |
+| due_date    | date     | No       | Format: d/m/Y H:M        |
+
+#### Get Task Details
+```http
+GET /api/v1/companies/tasks/{id}
+```
+
+#### Update Task
+```http
+PUT /api/v1/companies/tasks/{id}
+```
+
+| Parameter    | Type     | Required | Description              |
+|-------------|----------|----------|--------------------------|
+| employee_id | number   | No       |                          |
+| status_id   | number   | No       |                          |
+| title       | string   | No       |                          |
+| description | string   | No       |                          |
+| due_date    | date     | No       | Format: d/m/Y H:M        |
+
+## Security
+
+All API endpoints (except authentication) require a valid authentication token. Include the token in the Authorization header:
+
+```http
+Authorization: Bearer <your_access_token>
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a new Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+```
