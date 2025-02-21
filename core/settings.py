@@ -92,10 +92,10 @@ CORS_ALLOW_ALL_ORIGINS = True
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-         'NAME': os.environ.get('NAME_DATABASE'),  # Verifique se o nome é exatamente esse
+         'NAME': os.environ.get('NAME_DATABASE'), 
         'USER': 'root',
         'PASSWORD': os.environ.get('PASSWORD'),
-        'HOST': os.environ.get('HOST'),  # Usando o IP do host Windows
+        'HOST': os.environ.get('HOST'), 
         'PORT': '3306',
     }
 }
