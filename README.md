@@ -1,49 +1,123 @@
 # Enterprise Resource Planning (ERP) System
 
-A comprehensive Enterprise Resource Planning system built with modern technologies, featuring a ReactJS frontend and Django Rest Framework backend.
+A comprehensive Enterprise Resource Planning system built with Django and Django Rest Framework, providing robust business management capabilities.
 
-## Overview
+## Project Structure
 
-This project implements a complete business management solution with features including:
-- User Authentication and Authorization
-- Employee Management
-- Role-based Access Control
-- Task Management
-- Company Administration
+```
+FULL-STACK-ERP-APP/
+├── accounts/                    # User Authentication & Management
+│   ├── __pycache__/
+│   ├── migrations/
+│   ├── views/
+│   │   ├── __pycache__/
+│   │   ├── __init__.py
+│   │   ├── base.py
+│   │   ├── signin.py
+│   │   ├── signup.py
+│   │   └── user.py
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── apps.py
+│   ├── auth.py
+│   ├── models.py
+│   ├── serializers.py
+│   ├── tests.py
+│   ├── urls.py
+│   └── views.py
+├── companies/                   # Company Management
+│   ├── __pycache__/
+│   ├── migrations/
+│   ├── utils/
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── apps.py
+│   ├── models.py
+│   ├── tests.py
+│   └── views.py
+├── core/                       # Project Core Settings
+│   ├── __init__.py
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
+├── src/                       # Additional Source Files
+├── tests/                     # Project-wide Tests
+├── .env                      # Environment Variables
+├── .gitignore
+├── LICENSE
+├── manage.py
+├── poetry.lock
+├── pyproject.toml
+└── install.ps1
+```
 
 ## Technology Stack
 
-### Frontend
-- ReactJS
-- TypeScript
-- React Router
-- Redux
-- Material UI
-- Axios
-
-### Backend
-- Django
+- Python 3.11+
+- Django 4.2+
 - Django Rest Framework
-- Simple JWT
+- PostgreSQL
+- Simple JWT for authentication
+- Poetry for dependency management
 
-## Getting Started
+## Apps Description
 
-### Prerequisites
-- Python 3.x
-- Node.js
-- npm or yarn
+### Accounts App
+Handles all user-related functionality including:
+- User authentication (signin/signup)
+- User management
+- Permission handling
+- User profiles
 
-### Installation
+### Companies App
+Manages company-related features including:
+- Company information
+- Employee management
+- Group/Role management
+- Task management
 
-Start the development server:
+## Installation
 
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/FULL-STACK-ERP-APP.git
+cd FULL-STACK-ERP-APP
+```
+
+2. Install dependencies with Poetry:
+```bash
+poetry install
+```
+
+3. Activate the virtual environment:
+```bash
+poetry shell
+```
+
+4. Configure your environment variables:
+```bash
+cp .env.example .env
+# Edit .env with your database and other configuration settings
+```
+
+5. Run migrations:
+```bash
+python manage.py migrate
+```
+
+6. Create a superuser:
+```bash
+python manage.py createsuperuser
+```
+
+7. Start the development server:
 ```bash
 python manage.py runserver
 ```
 
 ## API Documentation
 
-### Authentication
+### Accounts API
 
 #### Create Account
 ```http
@@ -71,16 +145,12 @@ POST /api/v1/auth/signin
 GET /api/v1/auth/user
 ```
 
-*Requires Authentication Token*
-
-### Employee Management
+### Companies API
 
 #### List Company Employees
 ```http
 GET /api/v1/companies/employees
 ```
-
-*Requires Authentication*
 
 #### Create Employee
 ```http
@@ -93,90 +163,41 @@ POST /api/v1/companies/employees
 | email     | string   | Yes      |
 | password  | string   | Yes      |
 
-#### Get Employee Details
-```http
-GET /api/v1/companies/employees/{id}
-```
-
-#### Update Employee
-```http
-PUT /api/v1/companies/employees/{id}
-```
-
-| Parameter  | Type     | Required | Description           |
-|-----------|----------|----------|-----------------------|
-| groups    | string   | No       | Array of group IDs    |
-| name      | string   | No       |                       |
-| email     | string   | No       |                       |
-
-### Groups and Permissions
-
-#### List Groups
+#### Groups Management
 ```http
 GET /api/v1/companies/groups
-```
-
-#### Create Group
-```http
 POST /api/v1/companies/groups
 ```
 
-| Parameter    | Type     | Required | Description              |
-|-------------|----------|----------|--------------------------|
-| name        | string   | Yes      |                          |
-| permissions | string   | Yes      | Array of permission IDs  |
+## Development
 
-#### Get Group Details
-```http
-GET /api/v1/companies/groups/{id}
+### Running Tests
+
+```bash
+# Run all tests
+poetry run python manage.py test
+
+# Run specific app tests
+poetry run python manage.py test accounts
+poetry run python manage.py test companies
 ```
 
-#### List Available Permissions
-```http
-GET /api/v1/companies/permissions
+### Code Quality
+
+```bash
+# Run black for code formatting
+poetry run black .
+
+# Run isort for import sorting
+poetry run isort .
+
+# Run flake8 for linting
+poetry run flake8
 ```
-
-### Task Management
-
-#### List Tasks
-```http
-GET /api/v1/companies/tasks
-```
-
-#### Create Task
-```http
-POST /api/v1/companies/tasks
-```
-
-| Parameter    | Type     | Required | Description              |
-|-------------|----------|----------|--------------------------|
-| employee_id | number   | Yes      |                          |
-| status_id   | number   | Yes      |                          |
-| title       | string   | Yes      |                          |
-| description | string   | No       |                          |
-| due_date    | date     | No       | Format: d/m/Y H:M        |
-
-#### Get Task Details
-```http
-GET /api/v1/companies/tasks/{id}
-```
-
-#### Update Task
-```http
-PUT /api/v1/companies/tasks/{id}
-```
-
-| Parameter    | Type     | Required | Description              |
-|-------------|----------|----------|--------------------------|
-| employee_id | number   | No       |                          |
-| status_id   | number   | No       |                          |
-| title       | string   | No       |                          |
-| description | string   | No       |                          |
-| due_date    | date     | No       | Format: d/m/Y H:M        |
 
 ## Security
 
-All API endpoints (except authentication) require a valid authentication token. Include the token in the Authorization header:
+All API endpoints (except authentication) require a valid JWT token:
 
 ```http
 Authorization: Bearer <your_access_token>
@@ -185,10 +206,12 @@ Authorization: Bearer <your_access_token>
 ## Contributing
 
 1. Fork the repository
-2. Create your feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a new Pull Request
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Make your changes
+4. Run the tests to ensure everything works
+5. Commit your changes (`git commit -m 'Add some amazing feature'`)
+6. Push to the branch (`git push origin feature/amazing-feature`)
+7. Open a Pull Request
 
 ## License
 
