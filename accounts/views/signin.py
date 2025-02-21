@@ -10,7 +10,7 @@ class SignIn(Base):
       email = request.data.get('email')
       password = request.data.get('password')
       
-      user = Authentication().signin(self, email=email, password=password)
+      user = Authentication().signin(email=email, password=password)
       enterprise = self.get_enterprise_user(user.id)
       
       token = RefreshToken.for_user(user)
@@ -19,7 +19,7 @@ class SignIn(Base):
       return Response({
           "user": serializer.data,
           "enterprise": enterprise,
-          "refresh": token.refresh,
+          "refresh": token,
           "access": token.access_token
       })
       
