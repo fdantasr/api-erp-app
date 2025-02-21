@@ -3,7 +3,7 @@ from django.contrib.auth.models import Permission
 from accounts.models import User_Groups, Group_Permissions
 
 def check_permission(user, method, permission_to):
-    if not user.user.is_authenticated:
+    if not user.is_authenticated:
         return False
     if user.is_owner:
         return True
@@ -29,7 +29,7 @@ class EmployeesPermission(permissions.BasePermission):
    def has_permission(self, request, _view):
        return check_permission(request.user, request.method, permission_to='employee')
 
-class GroupesPermission(permissions.BasePermission):
+class GroupsPermission(permissions.BasePermission):
    message = 'You do not have permission to manage groupes'
    def has_permission(self, request, _view):
        return check_permission(request.user, request.method, permission_to='group')    
