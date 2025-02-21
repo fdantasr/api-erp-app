@@ -1,6 +1,6 @@
 from rest_framework import permissions
 from django.contrib.auth.models import Permission
-from accounts.models import User_Groupes, Groupe_Permissions
+from accounts.models import User_Groups, Group_Permissions
 
 def check_permission(user, method, permission_to):
     if not user.user.is_authenticated:
@@ -15,10 +15,10 @@ def check_permission(user, method, permission_to):
     elif method == 'DELETE':
         required_permission = 'delete_' + permission_to
 
-    groups = User_Groupes.objects.values('group_id').filter(user_id=user.user.id).all()
+    groups = User_Groups.objects.values('group_id').filter(user_id=user.user.id).all()
     
     for group in groups:
-        permissions = Groupe_Permissions.objects.values('permission_id').filter(group_id=group['group_id']).all()
+        permissions = Group_Permissions.objects.values('permission_id').filter(group_id=group['group_id']).all()
         
         for permission in permissions:
             if Permission.objects.filter(id=permission['permission_id'], codename=required_permission).exists():
