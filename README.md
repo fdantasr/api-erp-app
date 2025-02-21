@@ -80,8 +80,8 @@ Manages company-related features including:
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/FULL-STACK-ERP-APP.git
-cd FULL-STACK-ERP-APP
+git clone https://github.com/fdantasr/full-stack-erp-app.git
+cd full-stack-erp-app
 ```
 
 2. Install dependencies with Poetry:
@@ -91,7 +91,7 @@ poetry install
 
 3. Activate the virtual environment:
 ```bash
-poetry shell
+poetry env activate
 ```
 
 4. Configure your environment variables:
