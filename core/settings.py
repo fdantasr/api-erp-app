@@ -31,7 +31,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = os.getenv("API_URL", "").split(",")
+ALLOWED_HOSTS = [os.getenv("API_URL", "localhost")]
 
 # Application definition
 
