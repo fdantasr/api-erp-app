@@ -170,3 +170,7 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# AWS related configurations (no sensitive information)
+zappa_settings.json
+.env*
